@@ -17,211 +17,218 @@ pub struct Profile {
 
 #[derive(Clone, Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-struct PagingInfo {
-    continuation_token: String,
+pub struct PagingInfo {
+    pub continuation_token: String,
+}
+
+#[derive(Clone, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Thumbnail {
+    pub uri: String,
+    pub file_size: i32,
+    pub thumbnail_type: String,
+}
+
+#[derive(Clone, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ResourceUri {
+    pub uri: String,
+    pub file_size: i32,
+    pub uri_type: String,
+    pub expiration: String,
 }
 
 #[derive(Clone, Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Clip {
-    game_clip_id: String,
-    state: String,
-    date_published: String,
-    date_recorded: String,
-    last_modified: String,
-    user_caption: String,
-    r#type: String,
-    duration_in_seconds: i32,
-    scid: String,
-    title_id: i32,
-    rating: i32,
-    rating_count: i32,
-    views: i32,
-    title_data: String,
-    system_properties: String,
-    saved_by_user: bool,
-    achievement_id: String,
-    greatest_moment_id: String,
-    // thumbnails: array<{
-    //   uri: String,
-    //   file_size: i32,
-    //   thumbnail_type: String,
-    // }>;
-    // game_clip_uris: array<{
-    //   uri: String,
-    //   file_size: i32,
-    //   uri_type: String,
-    //   expiration: String,
-    // }>;
-    xuid: String,
-    clip_name: String,
-    title_name: String,
-    game_clip_locale: String,
-    clip_content_attributes: String,
-    device_type: String,
-    comment_count: i32,
-    like_count: i32,
-    share_count: i32,
-    partial_views: i32,
+    pub game_clip_id: String,
+    pub state: String,
+    pub date_published: String,
+    pub date_recorded: String,
+    pub last_modified: String,
+    pub user_caption: String,
+    pub r#type: String,
+    pub duration_in_seconds: i32,
+    pub scid: String,
+    pub title_id: i32,
+    pub rating: i32,
+    pub rating_count: i32,
+    pub views: i32,
+    pub title_data: String,
+    pub system_properties: String,
+    pub saved_by_user: bool,
+    pub achievement_id: String,
+    pub greatest_moment_id: String,
+    pub thumbnails: Vec<Thumbnail>,
+    pub game_clip_uris: Vec<ResourceUri>,
+    pub xuid: String,
+    pub clip_name: String,
+    pub title_name: String,
+    pub game_clip_locale: String,
+    pub clip_content_attributes: String,
+    pub device_type: String,
+    pub comment_count: i32,
+    pub like_count: i32,
+    pub share_count: i32,
+    pub partial_views: i32,
 }
 #[derive(Clone, Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GetClipsResponse {
-    game_clips: Vec<Clip>,
-    paging_info: PagingInfo,
+    pub game_clips: Vec<Clip>,
+    pub paging_info: PagingInfo,
 }
 
 #[derive(Clone, Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ScreenShot {
-    screenshot_id: String,
-    resolution_height: i32,
-    resolution_width: i32,
-    state: String,
-    date_published: String,
-    date_taken: String,
-    last_modified: String,
-    user_caption: String,
-    r#type: String,
-    scid: String,
-    title_id: i32,
-    rating: i32,
-    rating_count: i32,
-    views: i32,
-    title_data: String,
-    system_properties: String,
-    saved_by_user: bool,
-    achievement_id: String,
-    greatest_moment_id: Option<String>,
-    // thumbnails: array<{
-    //   uri: String,
-    //   file_size: i32,
-    //   thumbnail_type: String,
-    // }>;
-    // screenshot_uris: array<{
-    //   uri: String,
-    //   file_size: i32,
-    //   uri_type: String,
-    //   expiration: String,
-    // }>;
-    xuid: String,
-    screenshot_name: String,
-    title_name: String,
-    screenshot_locale: String,
-    screenshot_content_attributes: String,
-    device_type: String,
+    pub screenshot_id: String,
+    pub resolution_height: i32,
+    pub resolution_width: i32,
+    pub state: String,
+    pub date_published: String,
+    pub date_taken: String,
+    pub last_modified: String,
+    pub user_caption: String,
+    pub r#type: String,
+    pub scid: String,
+    pub title_id: i32,
+    pub rating: i32,
+    pub rating_count: i32,
+    pub views: i32,
+    pub title_data: String,
+    pub system_properties: String,
+    pub saved_by_user: bool,
+    pub achievement_id: String,
+    pub greatest_moment_id: Option<String>,
+    pub thumbnails: Vec<Thumbnail>,
+    pub game_clip_uris: Vec<ResourceUri>,
+    pub xuid: String,
+    pub screenshot_name: String,
+    pub title_name: String,
+    pub screenshot_locale: String,
+    pub screenshot_content_attributes: String,
+    pub device_type: String,
 }
 
 #[derive(Clone, Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GetScreenshotsResponse {
-    screenshots: Vec<ScreenShot>,
-    paging_info: PagingInfo,
+    pub screenshots: Vec<ScreenShot>,
+    pub paging_info: PagingInfo,
 }
 
 #[derive(Clone, Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Title {
-    last_unlock: String,
-    title_id: i32,
-    service_config_id: String,
-    title_type: String,
-    platform: String,
-    name: String,
-    earned_achievements: i32,
-    current_gamerscore: i32,
-    max_gamerscore: i32,
+    pub last_unlock: String,
+    pub title_id: i32,
+    pub service_config_id: String,
+    pub title_type: String,
+    pub platform: String,
+    pub name: String,
+    pub earned_achievements: i32,
+    pub current_gamerscore: i32,
+    pub max_gamerscore: i32,
 }
 
 #[derive(Clone, Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GetAchievementsReponse {
-    titles: Vec<Title>,
-    paging_info: PagingInfo,
+    pub titles: Vec<Title>,
+    pub paging_info: PagingInfo,
+}
+
+#[derive(Clone, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Activity {
+    pub num_shares: i32,
+    pub num_likes: i32,
+    pub num_comments: i32,
+    pub ugc_caption: Option<String>,
+    pub achievement_scid: String,
+    pub achievement_id: String,
+    pub activity_item_type: String,
+    pub achievement_type: String,
+    pub user_xuid: String,
+    pub achievement_icon: String,
+    pub author_type: String,
+    pub gamerscore: i32,
+    pub date: String,
+    pub achievement_name: String,
+    pub content_type: String,
+    pub achievement_description: String,
+    pub title_id: String,
+    pub is_secret: bool,
+    pub platform: String,
+    pub shared_source_user: i32,
+    pub sandboxid: String,
+    pub rarity_category: String,
+    pub user_key: Option<String>,
+    pub rarity_percentage: i32,
+    pub scid: String,
+    pub date_override: String,
+    pub is_mock: bool,
+    pub is_user_post: bool,
+    pub locator: String,
+}
+
+#[derive(Clone, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AuthorInfo {
+    pub name: String,
+    pub second_name: String,
+    pub image_url: String,
+    pub author_type: String,
+    pub id: String,
 }
 
 #[derive(Clone, Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ActivityItem {
-    achievement_scid: String,
-    achievement_id: String,
-    achievement_type: String,
-    achievement_icon: String,
-    gamerscore: i32,
-    achievement_name: String,
-    achievement_description: String,
-    is_secret: bool,
-    has_app_award: bool,
-    has_art_award: bool,
-    content_image_uri: String,
-    content_title: String,
-    platform: String,
-    title_id: String,
-    // activity: {
-    //   num_shares: i32,
-    //   num_likes: i32,
-    //   num_comments: i32,
-    //   ugc_caption: nullable<unknown>;
-    //   achievement_scid: String,
-    //   achievement_id: String,
-    //   activity_item_type: String,
-    //   achievement_type: String,
-    //   user_xuid: String,
-    //   achievement_icon: String,
-    //   author_type: String,
-    //   gamerscore: i32,
-    //   date: String,
-    //   achievement_name: String,
-    //   content_type: String,
-    //   achievement_description: String,
-    //   title_id: String,
-    //   is_secret: bool,
-    //   platform: String,
-    //   shared_source_user: i32,
-    //   sandboxid: String,
-    //   rarity_category: String,
-    //   user_key: nullable<unknown>;
-    //   rarity_percentage: i32,
-    //   scid: String,
-    //   date_override: String,
-    //   is_mock: bool,
-    //   is_user_post: bool,
-    //   locator: String,
-    // };
-    user_image_uri_md: String,
-    user_image_uri_xs: String,
-    description: String,
-    date: String,
-    has_ugc: bool,
-    activity_item_type: String,
-    content_type: String,
-    short_description: String,
-    item_text: String,
-    item_image: String,
-    share_root: String,
-    feed_item_id: String,
-    item_root: String,
-    has_liked: bool,
-    // author_info: {
-    //   name: String,
-    //   second_name: String,
-    //   image_url: String,
-    //   author_type: String,
-    //   id: String,
-    // };
-    gamertag: String,
-    real_name: String,
-    display_name: String,
-    user_image_uri: String,
-    user_xuid: String,
+    pub achievement_scid: String,
+    pub achievement_id: String,
+    pub achievement_type: String,
+    pub achievement_icon: String,
+    pub gamerscore: i32,
+    pub achievement_name: String,
+    pub achievement_description: String,
+    pub is_secret: bool,
+    pub has_app_award: bool,
+    pub has_art_award: bool,
+    pub content_image_uri: String,
+    pub content_title: String,
+    pub platform: String,
+    pub title_id: String,
+    pub activity: Activity,
+    pub user_image_uri_md: String,
+    pub user_image_uri_xs: String,
+    pub description: String,
+    pub date: String,
+    pub has_ugc: bool,
+    pub activity_item_type: String,
+    pub content_type: String,
+    pub short_description: String,
+    pub item_text: String,
+    pub item_image: String,
+    pub share_root: String,
+    pub feed_item_id: String,
+    pub item_root: String,
+    pub has_liked: bool,
+    pub author_info: AuthorInfo,
+    pub gamertag: String,
+    pub real_name: String,
+    pub display_name: String,
+    pub user_image_uri: String,
+    pub user_xuid: String,
 }
 
 #[derive(Clone, Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GetActivityResponse {
-    activity_items: Vec<ActivityItem>,
-    cont_token: String,
-    num_items: i32,
-    polling_interval_seconds: String,
-    polling_token: String,
+    pub activity_items: Vec<ActivityItem>,
+    pub cont_token: String,
+    pub num_items: i32,
+    pub polling_interval_seconds: String,
+    pub polling_token: String,
 }
