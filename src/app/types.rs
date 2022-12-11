@@ -11,7 +11,6 @@ pub struct ProfileResponse {
 pub struct Profile {
     pub id: String,
     pub host_id: String,
-    // settings: Vec<unknown>,
     pub is_sponsored_user: bool,
 }
 

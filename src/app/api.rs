@@ -9,9 +9,10 @@ use super::types::{
 use super::utils::add_headers;
 
 pub async fn fetch_profile(gamer_tag: &str) -> Result<Profile> {
+    let encoded_gamer_tag = encode(gamer_tag);
     let request_url = format!(
         "https://profile.xboxlive.com/users/gt({gamertag})/profile/settings",
-        gamertag = encode(gamer_tag),
+        gamertag = encoded_gamer_tag,
     );
     let client = reqwest::Client::new();
     let auth_data = fetch_cookies_and_authorization().await?;

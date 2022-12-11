@@ -8,5 +8,5 @@ mod app;
 async fn main() {
     dotenv().ok();
     let profile = fetch_profile("Daaaavie").await;
-    println!("{:#?}", profile.unwrap());
+    println!("{:?}", profile);
 }
