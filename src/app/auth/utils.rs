@@ -44,6 +44,12 @@ pub fn generate_post_values(ppft_re: String) -> String {
     post_values.insert("i17".to_string(), "0".to_string());
     post_values.insert("i18".to_string(), "__Login_Host|1".to_string());
     let query_string = serde_qs::to_string(&post_values).unwrap();
-    print!("{}", query_string);
     return query_string;
+}
+
+
+pub fn extract_access_token(url: String) -> String {
+    let access_token_re = Regex::new(r"access_token=(.+?)&").unwrap();
+    let access_token = access_token_re.captures(&url).unwrap();
+    return access_token.get(1).unwrap().as_str().to_string();
 }

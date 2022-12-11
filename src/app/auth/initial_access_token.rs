@@ -1,11 +1,12 @@
-use super::{pre_auth::FetchPreAuthDataResponse, utils::generate_post_values};
+use std::collections::HashMap;
+
+use super::{pre_auth::FetchPreAuthDataResponse, utils::{generate_post_values, extract_access_token}};
 use reqwest::{
-    header::{COOKIE},
+    header::{CONTENT_TYPE, COOKIE},
     Url,
 };
 
 const HOST: &str = "login.live.com";
-
 
 #[derive(Debug)]
 pub struct ResultData {
@@ -24,9 +25,8 @@ pub async fn fetch_initial_access_token(
     let ppft_re = &url_post_and_ppft_re[1].1;
     let post_values = generate_post_values(ppft_re.to_string());
     let url = Url::parse(&url_post).unwrap();
-    let path = url.path();
+    let path = url.path().to_owned() + "?" + url.query().unwrap();
     if path.is_empty() {
-        print!("yay");
         panic!("No path found on query params");
     }
 
@@ -36,23 +36,20 @@ pub async fn fetch_initial_access_token(
         .map(|(key, value)| format!("{}={}", key, value))
         .collect::<Vec<String>>()
         .join("; ");
+
+    let request_url = "https://".to_owned() + HOST + &path;
     let access_token_response = client
-        .post(&format!("https://{}{}", HOST, path))
+        .post(request_url)
         .body(post_values)
         .header(COOKIE, cookie_string)
+        .header(CONTENT_TYPE, "application/x-www-form-urlencoded")
         .send()
         .await?;
-    if [302, 200].contains(&access_token_response.status().as_u16()) {
-        let url = access_token_response.url();
-        print!("{:?}", access_token_response);
-        let access_token = url
-            .query_pairs()
-            .find(|pair| pair.0 == "access_token")
-            .unwrap()
-            .1
-            .to_string();
+    let status = &access_token_response.status().as_u16();
+    if [302, 200].contains(status) {
+        let url = access_token_response.url().as_str();
+        let access_token = extract_access_token(url.to_string());
         if access_token.is_empty() {
-            print!("yay2");
             panic!("Could not find access token");
         }
         Ok(ResultData {
@@ -60,7 +57,6 @@ pub async fn fetch_initial_access_token(
             access_token: access_token,
         })
     } else {
-        print!("yay3");
         panic!("Could not get access token");
     }
 }
