@@ -22,14 +22,10 @@ pub fn extract_url_post_and_ppft_re(payload: String) -> [(String, String); 2] {
 
 pub fn generate_post_values(ppft_re: String) -> String {
     let mut post_values = HashMap::new();
-    post_values.insert(
-        "login".to_string(),
-        std::env::var("XBL_USERNAME").unwrap_or_default(),
-    );
-    post_values.insert(
-        "passwd".to_string(),
-        std::env::var("XBL_PASSWORD").unwrap_or_default(),
-    );
+    let username = std::env::var("XBL_USERNAME").unwrap();
+    let password = std::env::var("XBL_PASSWORD").unwrap();
+    post_values.insert("login".to_string(), username);
+    post_values.insert("passwd".to_string(), password);
     post_values.insert("PPFT".to_string(), ppft_re);
     post_values.insert("PPSX".to_string(), "Passpor".to_string());
     post_values.insert("SI".to_string(), "Sign In".to_string());
