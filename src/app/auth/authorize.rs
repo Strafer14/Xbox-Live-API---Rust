@@ -1,10 +1,13 @@
 use reqwest::header::COOKIE;
-use serde::{Serialize};
+use serde::Serialize;
 
-use super::{authenticate::{AuthenticationResult, AuthenticationResponse}, utils::turn_cookie_vector_to_string};
+use super::{
+    authenticate::{AuthenticationResponse, AuthenticationResult},
+    utils::turn_cookie_vector_to_string,
+};
 
 #[derive(Serialize)]
-pub struct Properties {
+struct Properties {
     UserTokens: Vec<String>,
     SandboxId: String,
 }
@@ -21,7 +24,9 @@ pub struct AuthorizeResult {
     pub authorization_header: String,
 }
 
-pub async fn authorize(authentication_data: AuthenticationResult) -> reqwest::Result<AuthorizeResult> {
+pub async fn authorize(
+    authentication_data: AuthenticationResult,
+) -> reqwest::Result<AuthorizeResult> {
     let client = reqwest::Client::new();
     let properties = Properties {
         UserTokens: [authentication_data.token].to_vec(),
@@ -48,5 +53,5 @@ pub async fn authorize(authentication_data: AuthenticationResult) -> reqwest::Re
     return Ok(AuthorizeResult {
         cookies: authentication_data.cookies,
         authorization_header,
-    })
+    });
 }
