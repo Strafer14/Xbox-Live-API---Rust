@@ -1,6 +1,4 @@
-use std::collections::HashMap;
-
-use super::{pre_auth::FetchPreAuthDataResponse, utils::{generate_post_values, extract_access_token}};
+use super::{pre_auth::FetchPreAuthDataResponse, utils::{generate_post_values, extract_access_token, turn_cookie_vector_to_string}};
 use reqwest::{
     header::{CONTENT_TYPE, COOKIE},
     Url,
@@ -9,7 +7,7 @@ use reqwest::{
 const HOST: &str = "login.live.com";
 
 #[derive(Debug)]
-pub struct ResultData {
+pub struct FetchInitialTokenResultData {
     // Vector of cookie key, values
     pub cookies: Vec<(String, String)>,
     pub access_token: String,
@@ -17,7 +15,7 @@ pub struct ResultData {
 
 pub async fn fetch_initial_access_token(
     pre_auth_response: reqwest::Result<FetchPreAuthDataResponse>,
-) -> reqwest::Result<ResultData> {
+) -> reqwest::Result<FetchInitialTokenResultData> {
     let pre_auth_response_unwrapped = pre_auth_response.unwrap();
     let cookies = pre_auth_response_unwrapped.cookies;
     let url_post_and_ppft_re = pre_auth_response_unwrapped.url_post_and_ppft_re;
@@ -31,11 +29,7 @@ pub async fn fetch_initial_access_token(
     }
 
     let client = reqwest::Client::new();
-    let cookie_string = cookies
-        .iter()
-        .map(|(key, value)| format!("{}={}", key, value))
-        .collect::<Vec<String>>()
-        .join("; ");
+    let cookie_string = turn_cookie_vector_to_string(&cookies);
 
     let request_url = "https://".to_owned() + HOST + &path;
     let access_token_response = client
@@ -52,7 +46,7 @@ pub async fn fetch_initial_access_token(
         if access_token.is_empty() {
             panic!("Could not find access token");
         }
-        Ok(ResultData {
+        Ok(FetchInitialTokenResultData {
             cookies,
             access_token: access_token,
         })

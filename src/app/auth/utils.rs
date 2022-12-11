@@ -47,9 +47,17 @@ pub fn generate_post_values(ppft_re: String) -> String {
     return query_string;
 }
 
-
 pub fn extract_access_token(url: String) -> String {
     let access_token_re = Regex::new(r"access_token=(.+?)&").unwrap();
     let access_token = access_token_re.captures(&url).unwrap();
     return access_token.get(1).unwrap().as_str().to_string();
+}
+
+pub fn turn_cookie_vector_to_string(cookies: &Vec<(String, String)>) -> String {
+    let cookie_string = cookies
+        .iter()
+        .map(|(key, value)| format!("{}={}", key, value))
+        .collect::<Vec<String>>()
+        .join("; ");
+    return cookie_string;
 }

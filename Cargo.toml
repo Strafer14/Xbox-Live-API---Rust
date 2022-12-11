@@ -12,3 +12,4 @@ urlencoding = "2.1.2"
 async-std = { version = "1.6.5", features = ["attributes", "tokio1"] }
 regex = "1.7.0"
 serde_qs = "0.10.1"
+dotenv = "0.15.0"
